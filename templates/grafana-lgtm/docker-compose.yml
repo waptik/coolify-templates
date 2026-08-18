@@ -1,0 +1,50 @@
+services:
+  grafana:
+    image: grafana/otel-lgtm:latest
+    environment:
+      - SERVICE_URL_GRAFANA_3000
+      - GF_SERVER_DOMAIN=${SERVICE_FQDN_GRAFANA}
+      - GF_SERVER_ROOT_URL=https://${SERVICE_FQDN_GRAFANA}/
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_AUTH_GITHUB_ENABLED=true
+      - GF_AUTH_GITHUB_REDIRECT_URI=https://${SERVICE_FQDN_GRAFANA}/login/github
+      - GF_AUTH_GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID:?}
+      - GF_AUTH_GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET:?}
+      - GF_AUTH_GITHUB_SCOPES=user:email
+      - GF_AUTH_GITHUB_ALLOW_SIGN_UP=true
+      - GF_AUTH_BASIC_ENABLED=true
+      - GF_SECURITY_ADMIN_PASSWORD=${SERVICE_PASSWORD_GRAFANA}
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=postgresql
+      - GF_DATABASE_USER=${SERVICE_USER_POSTGRES}
+      - GF_DATABASE_PASSWORD=${SERVICE_PASSWORD_POSTGRES}
+      - GF_DATABASE_NAME=${POSTGRES_DB:-grafana}
+      - GF_LOG_LEVEL=${GF_LOG_LEVEL:-info}
+      - ENABLE_LOGS_GRAFANA=true
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - lgtm-data:/data
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    restart: unless-stopped
+
+  postgresql:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_USER=${SERVICE_USER_POSTGRES}
+      - POSTGRES_PASSWORD=${SERVICE_PASSWORD_POSTGRES}
+      - POSTGRES_DB=${POSTGRES_DB:-grafana}
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 20s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  grafana-data:
+  lgtm-data:
+  postgresql-data:

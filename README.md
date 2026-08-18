@@ -8,6 +8,7 @@ Each template is self-contained: it includes its Compose definition and deployme
 
 | Template | Purpose |
 | --- | --- |
+| [Grafana LGTM](./templates/grafana-lgtm/) | All-in-one Grafana, Loki, Tempo, Prometheus, Pyroscope, and OpenTelemetry Collector stack for development and testing. |
 | [Telegram Bot API server](./templates/telegram-bot-api/) | Run a local Telegram Bot API server behind Coolify's Traefik proxy. |
 
 ## Using a template
