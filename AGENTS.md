@@ -8,7 +8,7 @@ independently understandable.
 
 ## Adding or changing a template
 
-- Include `docker-compose.yml` and `README.md` in every template directory.
+- Include `docker-compose.yaml` and `README.md` in every template directory.
 - Add the template to the table in the root `README.md`.
 - Use descriptive, lowercase, hyphen-separated directory names.
 - Keep secrets out of the repository. Use required Compose interpolation such as
@@ -29,6 +29,6 @@ independently understandable.
 ## Validation
 
 Before committing a Compose change, validate its syntax with
-`docker compose -f templates/<template-slug>/docker-compose.yml config` after
+`docker compose -f templates/<template-slug>/docker-compose.yaml config` after
 supplying non-secret placeholder values for required variables. Do not run
 commands that expose or print real secrets.

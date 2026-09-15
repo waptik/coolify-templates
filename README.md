@@ -17,7 +17,7 @@ deployment-specific documentation.
 ## Using a template
 
 1. Open the template's directory and read its `README.md`.
-2. Copy its `docker-compose.yml` into a new Coolify Docker Compose service.
+2. Copy its `docker-compose.yaml` into a new Coolify Docker Compose service.
 3. Supply all required variables in Coolify, then deploy.
 
 Templates are designed for Coolify's wildcard-domain routing. They normally do

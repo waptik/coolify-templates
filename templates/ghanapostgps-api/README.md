@@ -18,7 +18,7 @@ GhanaPostGPS service each day at midnight.
 ## Deploy with Coolify
 
 1. Create a **Docker Compose** service in Coolify.
-2. Paste the contents of [`docker-compose.yml`](./docker-compose.yml).
+2. Paste the contents of [`docker-compose.yaml`](./docker-compose.yaml).
 3. Deploy. Coolify generates the `SERVICE_URL_GHANAPOSTGPS_9091` URL.
 4. Use the generated URL to access the API endpoints.
 
