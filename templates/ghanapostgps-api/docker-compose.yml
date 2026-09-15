@@ -1,0 +1,26 @@
+services:
+  ghanapostgps:
+    image: jayluxferro/ghanapostgps-api:latest
+    restart: unless-stopped
+    environment:
+      - SERVICE_URL_GHANAPOSTGPS_9091
+      - PORT=9091
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:9091/"]
+      interval: 30s
+      timeout: 20s
+      retries: 10
+      start_period: 40s
+    labels:
+      com.centurylinklabs.watchtower.enable: "true"
+
+  watchtower:
+    image: nickfedor/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command:
+      - --schedule
+      - "0 0 0 * * *"
+      - --label-enable
+      - --cleanup
+    restart: unless-stopped
